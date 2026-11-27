@@ -34,7 +34,7 @@ INITIAL_CAPITAL = 1_000_000
 BACKTEST_START = "2016-08-03"
 
 # ─── 数据获取 ───────────────────────────────────────────────────
-API_BASE = "https://a-stock-api.wj4020410.workers.dev"
+API_BASE = os.environ.get("A_STOCK_API_BASE", "https://stock-api.yygq.me").rstrip("/")
 
 def fetch_index_data(code, market="sh", start_date="20100101"):
     # 数据源统一改走 a-stock-api Worker（Cloudflare），彻底去掉对 akshare / 腾讯/中证接口的直连依赖。

@@ -1,20 +1,20 @@
 # 科技红轮动策略 · 创业板指 vs 红利低波 指数轮动监控
 
-数据经自建的 [a-stock-api](https://github.com/wj624/a-stock-api) Worker 取数（不再直连 AKShare），对 **创业板指（399006）** 与 **红利低波（H30269）** 做相对强弱轮动监控，
+数据经自建的 [a-stock-api](https://github.com/jameszzzqaq/a-stock-api) Worker 取数（不再直连 AKShare），对 **创业板指（399006）** 与 **红利低波（H30269）** 做相对强弱轮动监控，
 输出一份自包含 HTML 看板，图形与数据全部内联，断网也能看。
 
-- **在线看板（点开即用）**：https://wj624.github.io/rotation-monitor/
-- **看板中心（已作为第 5 个面板集成）**：https://wj-dashboards.pages.dev/
-- **原始项目（上游 wwww1998）**：https://wwww1998.github.io/rotation-monitor/
+- **在线看板（点开即用）**：https://rotation.yygq.me/
+- **备用在线地址（GitHub Pages）**：https://jameszzzqaq.github.io/rotation-monitor/
+- **原始项目（上游 wwww1998 / wj624）**：https://wwww1998.github.io/rotation-monitor/ · https://github.com/wj624/rotation-monitor
 - **原始源码**：https://github.com/wwww1998/rotation-monitor
-- **本仓库源码**：https://github.com/wj624/rotation-monitor
+- **本仓库源码**：https://github.com/jameszzzqaq/rotation-monitor
 
 **兄弟看板（同一套监控体系）**：
 
-- ETF + LSI：https://etf-lsi.pages.dev/
-- 国家队 ETF 资金流：https://wj624.github.io/national-team-etf-flow/
-- EarlETF 图表周刊：https://wj624.github.io/earl-etf-dashboard/
-- 美股 / 世界经济温度计：https://wj624.github.io/us-world-economy-dashboard/
+- ETF + LSI：https://etf-lsi.yygq.me/
+- 国家队 ETF 资金流：https://etf-flow.yygq.me/
+- EarlETF 图表周刊：https://earl.yygq.me/
+- 美股 / 世界经济温度计：https://economy.yygq.me/
 
 **一句话原理**：用两指数的**相对强弱（动量）**判断风格切换——创业板相对红利低波走强时持有创业板（进攻），
 转弱则切到红利低波（防御），本质是「追强弃弱」的动量轮动。
@@ -48,7 +48,7 @@
 | 创业板指（399006）日线 | a-stock-api Worker（腾讯行情） | `GET /api/kline?symbol=sz399006&start=2010-01-01` |
 | 红利低波（H30269）日线 | a-stock-api Worker（中证指数官网） | `GET /api/csindex?symbol=H30269&start=20160803` |
 
-- Worker 基址：`https://a-stock-api.wj4020410.workers.dev`（详见 [a-stock-api](https://github.com/wj624/a-stock-api)）。
+- Worker 基址：`https://stock-api.yygq.me`（详见 [a-stock-api](https://github.com/jameszzzqaq/a-stock-api)）。
 - **H30269 必须走 `/api/csindex`**：它是中证自定义指数，腾讯没有日线，走 `/api/kline` 会拿到空数组。
 - 2026-10 之前用的是 AKShare（`stock_zh_index_daily` 等），已全部替换；换源后**口径未变**，历史读数可比。
 - Worker 侧自带 KV 缓存（1 小时）；此外 `main.py` 还有进程内缓存（`_cache` + `CACHE_TTL = 300` 秒），5 分钟内复用同一份结果。
@@ -101,7 +101,7 @@ README.md                            本文件
 | Web 服务入口 | `main.py`（FastAPI，本地或 Render 用，**不参与** Actions 出图） |
 | 构建产物 | `public/index.html`（图表已内联），**由工作流自动提交回 main** |
 | 调度 | `daily_update.yml`，`cron: "0 16 * * *"`（UTC 16:00 = 北京 00:00） |
-| 兜底 | `watchdog.yml`，工作日北京时间 15:00–23:40 每 20 分钟检查一次页面是否已刷新（现已指向本仓库 `wj624/rotation-monitor`） |
+| 兜底 | `watchdog.yml`，工作日北京时间 15:00–23:40 每 20 分钟检查一次页面是否已刷新（使用 `${{ github.repository }}` 自动指向当前仓库） |
 | 依赖 | `fastapi uvicorn pandas numpy requests`（无 akshare） |
 | 密钥 | **不需要任何 Secret**（Worker 免鉴权，Pages 用内置 token） |
 
@@ -114,7 +114,7 @@ README.md                            本文件
 ### 7.3 提示词（复制这段给 AI）
 
 ```text
-你在维护 GitHub 仓库 wj624/rotation-monitor —— 一个「创业板指(399006) vs 红利低波(H30269)
+你在维护 GitHub 仓库 jameszzzqaq/rotation-monitor —— 一个「创业板指(399006) vs 红利低波(H30269)
 相对强弱轮动」监控看板。先读 README.md（尤其是「三、数据来源」与「七、给 AI 的维护提示词」）。
 
 【结构】
@@ -124,7 +124,7 @@ README.md                            本文件
 - .github/workflows/daily_update.yml 每天 UTC 16:00 跑一次；watchdog.yml 做当日兜底。
 
 【数据】
-- 唯一数据源是自建 Worker：https://a-stock-api.wj4020410.workers.dev
+- 唯一数据源是自建 Worker：https://stock-api.yygq.me
 - H30269（红利低波）必须用 /api/csindex?symbol=H30269&start=20160803
   —— 它是中证自定义指数，腾讯没有日线，走 /api/kline 会拿到空数组。
 - 399006 用 /api/kline?symbol=sz399006&start=2010-01-01
@@ -143,7 +143,7 @@ README.md                            本文件
   然后打开 public/index.html，确认「更新于」是今天、两条曲线都有值、信号状态与比值自洽。
 - 云端：Actions 里手动跑「每日更新监控数据」，看日志无异常、且 public/index.html 有新提交。
 - 注意：沙盒/部分 CI 网络访问不到 *.workers.dev，验证 Worker 可改用
-  https://github.com/wj624/a-stock-api 的 README §9（读 KV 缓存值）或让用户在浏览器里打开端点 URL。
+  https://github.com/jameszzzqaq/a-stock-api 的 README §9（读 KV 缓存值）或让用户在浏览器里打开端点 URL。
 
 【已修复：watchdog 现已指向本仓库】
 - .github/workflows/watchdog.yml 原先检查的是 **上游仓库 wwww1998/rotation-monitor** 的页面，

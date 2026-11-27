@@ -60,6 +60,23 @@ jobs:
             git push origin main
           fi
 
+      - name: 发布到 Cloudflare Pages (rotation.yygq.me)
+        if: success()
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          if [ -z "${CLOUDFLARE_API_TOKEN:-}" ] || [ -z "${CLOUDFLARE_ACCOUNT_ID:-}" ]; then
+            echo "::warning::未配置 CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID，跳过 Cloudflare Pages 发布"
+            exit 0
+          fi
+          npx --yes wrangler@4 pages deploy public \
+            --project-name=rotation-monitor \
+            --branch=main \
+            --commit-dirty=true
+          echo "已同步到 https://rotation.yygq.me/"
+
       - name: 上传 Pages 制品
         uses: actions/upload-pages-artifact@v3
         with:

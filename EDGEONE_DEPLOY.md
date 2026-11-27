@@ -6,7 +6,7 @@
 
 1. 登录 https://console.cloud.tencent.com/edgeone/pages
 2. 创建项目 → 选择「导入 Git 仓库」
-3. 授权 EdgeOne 访问你的 GitHub，选择仓库 `wj624/rotation-monitor`
+3. 授权 EdgeOne 访问你的 GitHub，选择仓库 `jameszzzqaq/rotation-monitor`
 4. 配置构建：
    - **构建命令(Build command)**：留空（本项目为纯静态单文件，无需构建）
    - **输出目录(Output directory)**：`public`

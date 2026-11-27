@@ -27,8 +27,8 @@ from contextlib import asynccontextmanager
 
 warnings.filterwarnings("ignore")
 
-# 共享数据源：Cloudflare Worker（详见 github.com/wj624/a-stock-api）
-API_BASE = "https://a-stock-api.wj4020410.workers.dev"
+# 共享数据源：Cloudflare Worker（详见 github.com/jameszzzqaq/a-stock-api）
+API_BASE = os.environ.get("A_STOCK_API_BASE", "https://stock-api.yygq.me").rstrip("/")
 
 # ─── 策略参数 ─────────────────────────────────────────────────
 BUY_THRESHOLD = 0.20   # 比值 < 20% → 买入创业板
