@@ -3,7 +3,8 @@
 数据经自建的 [a-stock-api](https://github.com/jameszzzqaq/a-stock-api) Worker 取数（不再直连 AKShare），对 **创业板指（399006）** 与 **红利低波（H30269）** 做相对强弱轮动监控，
 输出一份自包含 HTML 看板，图形与数据全部内联，断网也能看。
 
-- **在线看板（点开即用）**：https://rotation.yygq.me/
+- **在线看板（点开即用）**：https://invest.yygq.me/rotation/
+- **看板中心（聚合入口）**：https://invest.yygq.me/
 - **备用在线地址（GitHub Pages）**：https://jameszzzqaq.github.io/rotation-monitor/
 - **原始项目（上游 wwww1998 / wj624）**：https://wwww1998.github.io/rotation-monitor/ · https://github.com/wj624/rotation-monitor
 - **原始源码**：https://github.com/wwww1998/rotation-monitor
@@ -11,10 +12,10 @@
 
 **兄弟看板（同一套监控体系）**：
 
-- ETF + LSI：https://etf-lsi.yygq.me/
-- 国家队 ETF 资金流：https://etf-flow.yygq.me/
-- EarlETF 图表周刊：https://earl.yygq.me/
-- 美股 / 世界经济温度计：https://economy.yygq.me/
+- ETF + LSI：https://invest.yygq.me/etf-lsi/
+- 国家队 ETF 资金流：https://invest.yygq.me/etf-flow/
+- EarlETF 图表周刊：https://invest.yygq.me/earl/
+- 美股 / 世界经济温度计：https://invest.yygq.me/economy/
 
 **一句话原理**：用两指数的**相对强弱（动量）**判断风格切换——创业板相对红利低波走强时持有创业板（进攻），
 转弱则切到红利低波（防御），本质是「追强弃弱」的动量轮动。

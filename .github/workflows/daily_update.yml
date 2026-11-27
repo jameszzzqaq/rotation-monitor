@@ -60,7 +60,7 @@ jobs:
             git push origin main
           fi
 
-      - name: 发布到 Cloudflare Pages (rotation.yygq.me)
+      - name: 发布到 Cloudflare Pages (invest.yygq.me/rotation)
         if: success()
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -75,7 +75,7 @@ jobs:
             --project-name=rotation-monitor \
             --branch=main \
             --commit-dirty=true
-          echo "已同步到 https://rotation.yygq.me/"
+          echo "已同步到 https://invest.yygq.me/rotation/"
 
       - name: 上传 Pages 制品
         uses: actions/upload-pages-artifact@v3
